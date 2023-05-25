@@ -26,6 +26,16 @@ class Hero {
         throw new Error(`Failed to fetch hero data: ${error.message}`);
     }
 }
+
+static async getAll() {
+    try {
+      const response = await axios.get(`${process.env.URL_DB}/`);
+      const heroes = response.data.results;
+      return heroes.map(hero => new Hero(hero.id, hero.name, hero.powerstats, hero.biography, hero.appearance, hero.work, hero.connections, hero.image));
+    } catch (error) {
+      throw new Error(`Failed to fetch heroes data: ${error.message}`);
+    }
+  }
 }
 
 module.exports = Hero;
